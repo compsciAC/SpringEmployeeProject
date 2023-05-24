@@ -1,4 +1,8 @@
 package com.sparta.employeedatabase.entities.repository;
 
-public interface SalaryRepository extends org.springframework.data.jpa.repository.JpaRepository<com.sparta.employeedatabase.entities.dto.Salary, com.sparta.employeedatabase.entities.dto.SalaryId> {
+import com.sparta.employeedatabase.entities.dto.Salary;
+import com.sparta.employeedatabase.entities.dto.SalaryId;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
 }

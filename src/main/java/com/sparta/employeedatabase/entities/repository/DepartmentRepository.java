@@ -1,4 +1,7 @@
 package com.sparta.employeedatabase.entities.repository;
 
-public interface DepartmentRepository extends org.springframework.data.jpa.repository.JpaRepository<com.sparta.employeedatabase.entities.dto.Department, java.lang.String> {
+import com.sparta.employeedatabase.entities.dto.Department;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface DepartmentRepository extends JpaRepository<Department, String> {
 }
