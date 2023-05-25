@@ -19,12 +19,18 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             "and :yr = year(s.toDate)")
     List<Integer> findJobSalaryRangesInYear(String jobTitle, String yr);
 
-    @Query(value ="select avg(s.salary) \n" +
-            "from Salary s, DeptEmp de, Department d\n" +
-            "where s.empNo = de.empNo\n" +
-            "and de.deptNo=d.id\n" +
-            "and d.deptName=:deptName\n" +
-            "and :dt between de.fromDate and de.toDate\n" +
-            "and :dt between s.id.fromDate and s.toDate")
-    List<Integer> findDeptAvgSalaryOnDate(String deptName, String dt);
+    @Query(value ="select avg(s.salary) \n " +
+            "from Salary s, DeptEmp de, Department d  \n " +
+            "where s.empNo.id = de.empNo.id\n " +
+            "and de.deptNo.id=d.id\n " +
+            "and d.deptName=:deptName\n " +
+            "and :dt between de.fromDate and de.toDate\n " +
+            "and :dt between s.id.fromDate and s.toDate ")
+    List<Integer> findDeptAvgSalaryOnDate( String deptName, String dt);
+
+    @Query("select avg(s.salary) \n"
+            + "from Salary s, Employee e \n"
+            + "where s.empNo.id = e.id \n"
+            + "and e.gender = :gender")
+    int findAvgSalaryByGender(String gender);
 }
