@@ -32,5 +32,5 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             + "from Salary s, Employee e \n"
             + "where s.empNo.id = e.id \n"
             + "and e.gender = :gender")
-    int findAvgSalaryByGender(String gender);
+    double findAvgSalaryByGender(String gender);
 }
