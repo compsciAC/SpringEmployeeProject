@@ -48,8 +48,8 @@ and employees.departments.dept_no = "d003";
             " where de.empNo.id = e.id \n" +
             " and de.deptNo.id = d.id \n" +
             " and s.empNo.id = e.id \n" +
-            " and e.gender = :gender \n" +
-            " and de.deptNo.id = :deptId")
-    public double findAvgSalaryByDepartmentByGender(String gender, String deptId);
+            " and d.deptName = :deptName \n" +
+            " and e.gender = :gender")
+    public double findAvgSalaryByDepartmentByGender(String gender, String deptName);
 
 }
