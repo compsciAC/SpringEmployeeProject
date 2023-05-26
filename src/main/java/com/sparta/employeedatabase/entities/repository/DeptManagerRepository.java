@@ -9,15 +9,15 @@ import java.util.List;
 
 public interface DeptManagerRepository extends JpaRepository<DeptManager, DeptManagerId> {
 
-    @Query(value = "SELECT d.id, d.deptName,e.firstName,e.lastName\n" +
-        "FROM DeptManager dm, Department d, Employee e\n" +
-        "where dm.deptNo.id=d.id\n" +
+    @Query(value = "select concat(e.firstName, ' ', e.lastName)\n" +
+        "from DeptManager dm, Department d, Employee e\n" +
+        "where dm.id.deptNo=d.id\n" +
         "and e.id=dm.id.empNo\n" +
         "and :yr >= year(dm.fromDate)\n" +
         "and :yr <= year(dm.toDate)\n" +
-        "and d.id=:deptName")
+        "and d.deptName=:deptName")
 
-    List<Integer> findManagerForDeptInYear(String deptName, String yr);
+    String findManagerForDeptInYear(String deptName, String yr);
 
 
 }

@@ -27,6 +27,7 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             "and :yr = year(s.id.fromDate)\n" +
             "and :yr = year(s.toDate)")
     Integer findJobSalaryMinInYear(String jobTitle, String yr);
+
     @Query(value = "select max(s.salary) \n" +
             "from Salary s, Title t\n" +
             "where s.empNo=t.empNo\n" +
@@ -36,6 +37,7 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             "and :yr = year(s.id.fromDate)\n" +
             "and :yr = year(s.toDate)")
     Integer findJobSalaryMaxInYear(String jobTitle, String yr);
+
     @Query(value ="select avg(s.salary) \n " +
             "from Salary s, DeptEmp de, Department d  \n " +
             "where s.empNo.id = de.empNo.id\n " +
