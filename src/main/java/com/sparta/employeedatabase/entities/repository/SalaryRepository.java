@@ -4,6 +4,7 @@ import com.sparta.employeedatabase.entities.dto.Salary;
 import com.sparta.employeedatabase.entities.dto.SalaryId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -26,23 +27,14 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             "and d.deptName=:deptName\n " +
             "and :dt between de.fromDate and de.toDate\n " +
             "and :dt between s.id.fromDate and s.toDate ")
-    List<Integer> findDeptAvgSalaryOnDate( String deptName, String dt);
+    List<Integer> findDeptAvgSalaryOnDate(@Param("deptName") String deptName, @Param("dt") String dt);
 
     @Query("select avg(s.salary) \n"
             + "from Salary s, Employee e \n"
             + "where s.empNo.id = e.id \n"
             + "and e.gender = :gender")
-    double findAvgSalaryByGender(String gender);
+    double findAvgSalaryByGender(@Param("gender") String gender);
 
-    /*
-Select avg(employees.salaries.salary)
-From employees.salaries, employees.employees, employees.dept_emp, employees.departments
-where employees.salaries.emp_no = employees.employees.emp_no
-and employees.dept_emp.emp_no = employees.employees.emp_no
-and employees.dept_emp.dept_no = employees.departments.dept_no
-and employees.employees.gender = "F"
-and employees.departments.dept_no = "d003";
-     */
     @Query("select avg(s.salary) \n" +
             " from Employee e, Salary s, Department d, DeptEmp de \n" +
             " where de.empNo.id = e.id \n" +
@@ -50,6 +42,6 @@ and employees.departments.dept_no = "d003";
             " and s.empNo.id = e.id \n" +
             " and d.deptName = :deptName \n" +
             " and e.gender = :gender")
-    public double findAvgSalaryByDepartmentByGender(String gender, String deptName);
+    public double findAvgSalaryByDepartmentByGender(@Param("gender") String gender,@Param("deptName") String deptName);
 
 }
