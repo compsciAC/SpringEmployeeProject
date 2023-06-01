@@ -7,7 +7,11 @@ import com.sparta.employeedatabase.entities.repository.SalaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Optional;
+
+import static java.lang.Math.round;
 
 @Service
 public class SalaryService {
@@ -45,12 +49,13 @@ public class SalaryService {
     }
 
     public String percentageDifferenceBetweenGenders(double avgMaleSalary, double avgFemaleSalary){
+        DecimalFormat df = new DecimalFormat("0.00");
         if (avgMaleSalary >= avgFemaleSalary){
             double percentageDiff = (avgMaleSalary - avgFemaleSalary)/avgMaleSalary * 100;
-            return "Male employees earn " +  percentageDiff + "% more then female employees";
+            return "Male employees earn " +  df.format(percentageDiff) + "% more then female employees";
         } else{
             double percentageDiff = (avgFemaleSalary - avgMaleSalary)/avgFemaleSalary * 100;
-            return "Female employees earn " + percentageDiff + "% more then male employees";
+            return "Female employees earn " + df.format(percentageDiff) + "% more then male employees";
         }
     }
 
