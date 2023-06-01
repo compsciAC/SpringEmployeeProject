@@ -12,6 +12,15 @@ import java.util.Objects;
 @Embeddable
 public class DeptEmpId implements Serializable {
     private static final long serialVersionUID = 5113884399923567489L;
+
+    @Override
+    public String toString() {
+        return "DeptEmpId{" +
+                "empNo=" + empNo +
+                ", deptNo='" + deptNo + '\'' +
+                '}';
+    }
+
     @NotNull
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;

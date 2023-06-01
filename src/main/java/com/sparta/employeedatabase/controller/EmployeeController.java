@@ -28,7 +28,7 @@ public class EmployeeController {
         List<Employee> employeeList = employeeRepository.findByLastName(lastName);
         ArrayList<String> employeeString = new ArrayList<>();
         for(Employee employee: employeeList){
-            employeeString.add("Name: "+ employee.getFirstName() + " " + employee.getLastName() + " Id: " + employee.getId() + "\n");
+            employeeString.add("Name: "+ employee.toString() + "\n");
         }
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("content-type", "application/json");
@@ -40,11 +40,23 @@ public class EmployeeController {
         //return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
+    @GetMapping("/employee/id/{id}")
+    public ResponseEntity<String> getEmployeeById(@PathVariable Integer id){
+        Optional<Employee> employeeToFind = employeeRepository.findById(id);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if(employeeToFind.isPresent())
+                return new ResponseEntity<>("{\"employees\" : " + employeeToFind.get().toString() + "}", httpHeaders, HttpStatus.OK);
+        else
+            return new ResponseEntity<>("{\"employees\" : \"Employee with that id name does not exist\"}", httpHeaders, HttpStatus.OK);
+    }
+
+
+
 
     @PostMapping("/employee")
     public ResponseEntity<String> createEmployee(@RequestBody Employee employee) {
         employeeRepository.save(employee);
-        return ResponseEntity.ok("Employee created successfully.");
+        return ResponseEntity.ok("Employee created successfully." + employee.getId());
     }
 
     @PutMapping("/employee/{id}")
@@ -69,4 +81,6 @@ public class EmployeeController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }

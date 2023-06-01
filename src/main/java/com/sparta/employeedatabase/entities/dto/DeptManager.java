@@ -29,6 +29,17 @@ public class DeptManager {
     @Column(name = "from_date", nullable = false)
     private LocalDate fromDate;
 
+    @Override
+    public String toString() {
+        return "DeptManager{" +
+                "id=" + id +
+                ", empNo=" + empNo +
+                ", deptNo=" + deptNo +
+                ", fromDate=" + fromDate +
+                ", toDate=" + toDate +
+                '}';
+    }
+
     @NotNull
     @Column(name = "to_date", nullable = false)
     private LocalDate toDate;

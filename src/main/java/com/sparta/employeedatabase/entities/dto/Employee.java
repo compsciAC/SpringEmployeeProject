@@ -1,9 +1,6 @@
 package com.sparta.employeedatabase.entities.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -13,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "employees")
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "emp_no", nullable = false)
     private Integer id;
 
@@ -49,6 +47,18 @@ public class Employee {
 
     public LocalDate getBirthDate() {
         return birthDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", birthDate=" + birthDate +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", hireDate=" + hireDate +
+                '}';
     }
 
     public void setBirthDate(LocalDate birthDate) {
