@@ -25,6 +25,18 @@ public class SalaryService {
 
     }
 
+    public Integer findJobSalaryMinInYear(String jobTitle, String yr){
+        return salaryRepository.findJobSalaryMinInYear(jobTitle,yr);
+    }
+
+    public Integer findJobSalaryMaxInYear(String jobTitle, String yr){
+        return salaryRepository.findJobSalaryMaxInYear(jobTitle,yr);
+    }
+
+    public Double findDeptAvgSalaryOnDate( String deptName, String dt){
+        return salaryRepository.findDeptAvgSalaryOnDate(deptName,dt);
+    }
+
     public double avgSalaryByGender(String gender){
         return salaryRepository.findAvgSalaryByGender(gender);
     }
