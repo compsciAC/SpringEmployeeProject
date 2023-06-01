@@ -26,6 +26,16 @@ public class SalaryController {
         this.salaryRepository = salaryRepository;
     }
 
+    @GetMapping("salary/avgDeptSalOnDate/{deptName}/{dt}")
+    public ResponseEntity<String>getAvgDeptSalOnDate(@PathVariable String deptName,@PathVariable String dt){
+        return getStringResponseEntity(salaryService.findDeptAvgSalaryOnDate(deptName,dt).toString());
+    }
+
+    @GetMapping("salary/JobSalaryRangesInYear/{jobTitle}/{yr}")
+    public ResponseEntity<String>getJobSalaryRangesInYear(@PathVariable String jobTitle,@PathVariable String yr){
+        return getStringResponseEntity("Min:"+salaryService.findJobSalaryMinInYear(jobTitle,yr).toString()+" - Max:"+salaryService.findJobSalaryMaxInYear(jobTitle,yr).toString());
+    }
+
     @GetMapping("salary/paygap")
     public ResponseEntity<String>getGenderPayGap(){
         return getStringResponseEntity(salaryService.percentageDifferenceBetweenGenders(salaryService.avgSalaryByGender("M"), salaryService.avgSalaryByGender("F")));
