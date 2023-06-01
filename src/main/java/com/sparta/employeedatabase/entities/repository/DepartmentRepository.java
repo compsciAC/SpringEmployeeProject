@@ -43,6 +43,6 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
             "\temployees.dept_emp.to_date <= :toDate \n" +
             "GROUP BY\n" +
             "\temployees.departments.dept_name;", nativeQuery = true)
-    List<Integer> findSizeOfAllDepartmentsInGivenYear(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
+    List<Integer> findSizeOfAllDepartmentsInGivenYear(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 
 }
