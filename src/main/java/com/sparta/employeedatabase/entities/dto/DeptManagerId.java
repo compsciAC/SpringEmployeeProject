@@ -16,6 +16,14 @@ public class DeptManagerId implements Serializable {
     @Column(name = "emp_no", nullable = false)
     private Integer empNo;
 
+    @Override
+    public String toString() {
+        return "DeptManagerId{" +
+                "empNo=" + empNo +
+                ", deptNo='" + deptNo + '\'' +
+                '}';
+    }
+
     @Size(max = 4)
     @NotNull
     @Column(name = "dept_no", nullable = false, length = 4)
