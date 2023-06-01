@@ -38,9 +38,9 @@ public interface DepartmentRepository extends JpaRepository<Department, String> 
             "ON\n" +
             "\temployees.departments.dept_no=employees.dept_emp.dept_no\n" +
             "WHERE \n" +
-            "\temployees.dept_emp.from_date >= \"1987-01-01\"\n" +
+            "\temployees.dept_emp.from_date >= :fromDate \n" +
             "AND \n" +
-            "\temployees.dept_emp.to_date <= \"1987-02-28\"\n" +
+            "\temployees.dept_emp.to_date <= :toDate \n" +
             "GROUP BY\n" +
             "\temployees.departments.dept_name;", nativeQuery = true)
     List<Integer> findSizeOfAllDepartmentsInGivenYear(@Param("fromDate") LocalDate fromDate, @Param("toDate") LocalDate toDate);
