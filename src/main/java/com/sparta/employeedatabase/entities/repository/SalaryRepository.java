@@ -1,10 +1,13 @@
 package com.sparta.employeedatabase.entities.repository;
 
+import com.sparta.employeedatabase.entities.dto.Employee;
 import com.sparta.employeedatabase.entities.dto.Salary;
 import com.sparta.employeedatabase.entities.dto.SalaryId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.List;
 
 public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
 
@@ -63,5 +66,13 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
             " and d.deptName = :deptName \n" +
             " and e.gender = :gender")
     public double findAvgSalaryByDepartmentByGender(@Param("gender") String gender,@Param("deptName") String deptName);
+
+    @Query(value = "Select e from Employee e, Salary s "+
+            " where e.id = s.id.empNo and s.salary >= :salary ")
+    List<Employee> findSalariesAboveCertainSalary(@Param("salary")Integer salary);
+
+
+    @Query(value = "Select max(s.salary) from Employee e, Salary s where s.id.empNo = e.id and e.id = :empId ")
+    Integer highestSalaryOfGivenEmployeeId(@Param("empId") Integer empId);
 
 }
