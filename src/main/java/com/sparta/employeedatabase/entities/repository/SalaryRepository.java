@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
 
@@ -73,6 +74,6 @@ public interface SalaryRepository extends JpaRepository<Salary, SalaryId> {
 
 
     @Query(value = "Select max(s.salary) from Employee e, Salary s where s.id.empNo = e.id and e.id = :empId ")
-    Integer highestSalaryOfGivenEmployeeId(@Param("empId") Integer empId);
+    Optional<Integer> highestSalaryOfGivenEmployeeId(@Param("empId") Integer empId);
 
 }

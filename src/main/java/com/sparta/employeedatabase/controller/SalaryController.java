@@ -12,11 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,8 +32,9 @@ public class SalaryController {
     private ObjectMapper objectMapper;
 
     @Autowired
-    SalaryController(SalaryService salaryService, SalaryRepository salaryRepository, ObjectMapper objectMapper){
+    SalaryController(SalaryService salaryService, EmployeeRepository employeeRepository, SalaryRepository salaryRepository, ObjectMapper objectMapper){
         this.salaryService = salaryService;
+        this.employeeRepository = employeeRepository;
         this.salaryRepository = salaryRepository;
         this.objectMapper = objectMapper;
     }
@@ -83,13 +80,12 @@ public class SalaryController {
     @GetMapping(value = "/empsalary/{id}")
     public ResponseEntity<String> getSalaryByEmpId(@PathVariable Integer id){
         Optional<Employee>  employee = employeeRepository.findById(id);
-        Integer employeeSalary = salaryService.getEmployeeHighestSalaryByEmployeeId(id);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("content-type", "application/json");
         if(employee.isPresent()){
             ResponseEntity<String> employeePresentResponse = null;
             employeePresentResponse = new ResponseEntity<>(
-                    "{"+ employee.get().getId() + ", " + employee.get().getFirstName() + " " + employee.get().getLastName()  + " : " + employeeSalary + "}",
+                    "{"+ salaryService.getEmployeeHighestSalaryAndNameByEmployeeId(id) + "}",
                     httpHeaders,
                     HttpStatus.OK);
             return employeePresentResponse;
@@ -131,8 +127,8 @@ public class SalaryController {
     }
 
 
-    @PutMapping(value = "/salary/10001/{fromDate}/{toDate}")
-    ResponseEntity<String> salaryToUpdate(@PathVariable int empId,@PathVariable String fromDate,@PathVariable String toDate){
+    @PutMapping(value = "/salary/{empId}/{fromDate}/{toDate}")
+    ResponseEntity<String> salaryToUpdate(@PathVariable int empId,@PathVariable String fromDate,@PathVariable String toDate ,@RequestParam int newSalary){
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("content-type", "application/json");
         try {
@@ -141,7 +137,7 @@ public class SalaryController {
             Optional<Salary> salaryToUpdate = salaryService.getSalaryByEmpIdAndFromDate(empId, fromDateAsDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
             if (salaryToUpdate.isPresent()){
-                salaryToUpdate.get().setToDate(toDateAsDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                salaryToUpdate.get().setSalary(newSalary);
                 salaryService.saveSalary(salaryToUpdate.get());
                 ResponseEntity<String> salaryUpdatedResponse = new ResponseEntity<>(
                         objectMapper.writeValueAsString(salaryToUpdate.get().getSalary()),

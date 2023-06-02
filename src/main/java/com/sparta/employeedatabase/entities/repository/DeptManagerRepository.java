@@ -4,6 +4,7 @@ import com.sparta.employeedatabase.entities.dto.DeptManager;
 import com.sparta.employeedatabase.entities.dto.DeptManagerId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface DeptManagerRepository extends JpaRepository<DeptManager, DeptMa
         "and :yr <= year(dm.toDate)\n" +
         "and d.deptName=:deptName")
 
-    String findManagerForDeptInYear(String deptName, String yr);
+    String findManagerForDeptInYear(@Param("deptName") String deptName,@Param("yr") String yr);
 
 
 }
