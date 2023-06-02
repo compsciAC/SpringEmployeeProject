@@ -14,13 +14,13 @@ public class DeptManager {
     private DeptManagerId id;
 
     @MapsId("empNo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "emp_no", nullable = false)
     private Employee empNo;
 
     @MapsId("deptNo")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "dept_no", nullable = false)
     private Department deptNo;
@@ -83,5 +83,6 @@ public class DeptManager {
     public void setToDate(LocalDate toDate) {
         this.toDate = toDate;
     }
+
 
 }
