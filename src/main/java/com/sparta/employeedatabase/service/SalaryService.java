@@ -6,6 +6,7 @@ import com.sparta.employeedatabase.entities.dto.Employee;
 import com.sparta.employeedatabase.entities.dto.Salary;
 import com.sparta.employeedatabase.entities.dto.SalaryId;
 import com.sparta.employeedatabase.entities.repository.DepartmentRepository;
+import com.sparta.employeedatabase.entities.repository.EmployeeRepository;
 import com.sparta.employeedatabase.entities.repository.SalaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,15 @@ import static java.lang.Math.round;
 public class SalaryService {
 
     private final SalaryRepository salaryRepository;
+    private final EmployeeRepository employeeRepository;
 
 
     @Autowired
-    public SalaryService(SalaryRepository salaryRepository, DepartmentRepository departmentRepository){
+    public SalaryService(SalaryRepository salaryRepository, DepartmentRepository departmentRepository,
+                         EmployeeRepository employeeRepository){
         this.salaryRepository = salaryRepository;
 
+        this.employeeRepository = employeeRepository;
     }
 
     public Integer findJobSalaryMinInYear(String jobTitle, String yr){
@@ -76,7 +80,11 @@ public class SalaryService {
     }
 
     public Integer getEmployeeHighestSalaryByEmployeeId(Integer id){
-        return salaryRepository.highestSalaryOfGivenEmployeeId(id);
+        return salaryRepository.highestSalaryOfGivenEmployeeId(id).get();
+    }
+
+    public String getEmployeeHighestSalaryAndNameByEmployeeId(Integer id){
+        return employeeRepository.findById(id).get().getFirstName() + employeeRepository.findById(id).get().getLastName() + " : " + this.getEmployeeHighestSalaryByEmployeeId(id);
     }
 
     public Optional<Salary> getSalaryByEmpIdAndFromDate(Integer id, LocalDate fromDate){
