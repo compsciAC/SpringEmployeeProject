@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<h1>Employee Details</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birth date</th>
+        <th>Gender</th>
+        <th>Hire Date</th>
+    </tr>
+    </thead>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.lastName}"></td>
+        <td th:text="${employee.birthDate}"></td>
+        <td th:text="${employee.gender}"></td>
+        <td th:text="${employee.hireDate}"></td>
+
+
+        <td><a th:href="@{/employee/edit/{id}(id=${employee.id})}">Edit</a></td>
+        <td><a th:href="@{/employee/delete/{id}(id=${employee.id})}">Delete</a></td>
+    </tr>
+</table>
+</body>
+</html>

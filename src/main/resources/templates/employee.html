@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Employee</title>
+</head>
+<body>
+<h1>Employee Details</h1>
+<span th:if="${employee==null}">Employee not found</span>
+<span th:unless="${employee==null}">
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+    </tr>
+    </thead>
+    <tr>
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.lastName}"></td>
+
+        <td><a th:href="@{/employee/edit/{id}(id=${employee.id})}">Edit</a></td>
+
+    </tr>
+</table>
+    </span>
+</body>
+</html>
