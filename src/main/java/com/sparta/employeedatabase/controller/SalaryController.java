@@ -77,7 +77,7 @@ public class SalaryController {
         return response;
     }
 
-    @GetMapping(value = "/empsalary/{id}")
+    @GetMapping(value = "salary/empsalary/{id}")
     public ResponseEntity<String> getSalaryByEmpId(@PathVariable Integer id){
         Optional<Employee>  employee = employeeRepository.findById(id);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -99,7 +99,7 @@ public class SalaryController {
     }
 
 
-    @GetMapping(value = "/empabovsalary/{salary}")//this will return a list of employees
+    @GetMapping(value = "salary/empabovsalary/{salary}")//this will return a list of employees
     public ResponseEntity<String> getEmployeesEarningAboveSalary(@PathVariable Integer salary){
         List<Employee> employees = salaryService.getEmployeeEarningAboveGivenSalary(salary);
         ArrayList<String> employeesAndSalaries = new ArrayList<>();
